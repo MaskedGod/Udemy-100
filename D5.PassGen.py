@@ -11,21 +11,16 @@ nr_numbers = int(input(f"How many numbers would you like?\n"))
 
 pass_list = []
 password = ""
-i = 0
 
-while i < nr_letters:
+
+for char in range(1, nr_letters +1):
     pass_list.append(str(random.choice(letters)))
-    i += 1
-i = 0
 
-while i < nr_symbols:
+for char in range(1, nr_symbols +1):
     pass_list.append(str(random.choice(symbols)))
-    i += 1
-i = 0
 
-while i < nr_numbers:
+for char in range(1, nr_numbers +1):
     pass_list.append(str(random.choice(numbers)))
-    i += 1
 
 random.shuffle(pass_list)
 for char in range(len(pass_list)-1):
