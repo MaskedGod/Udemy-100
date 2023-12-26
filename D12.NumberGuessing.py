@@ -5,7 +5,7 @@ def clear():
     """Clears the screen"""
     os.system('cls')
 
-rndnum = random.randint(1, 101)
+rndnum = random.randint(1, 100)
 easy = 10
 hard = 5
 guess = 0
