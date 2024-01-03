@@ -32,14 +32,14 @@ def compare():
 def game():
     score = 0
     gaming = True
-    print(logo)
     while gaming == True:
         global first_choice
         global second_choice
+        print(logo)
         display_variants()
         players_choice = playerschoice()
         answer = compare()
-
+        clear()
         if answer == players_choice:
             score +=1
             print(f"You're right, score: {score}")
