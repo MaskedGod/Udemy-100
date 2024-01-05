@@ -80,7 +80,7 @@ def evaluate_resourses(choice):
         print("Sorry there is not enough coffee.")
         count += 1
     else:
-        print("Ok")
+        print("")
     return count
 
 def insert_coins():
@@ -104,5 +104,6 @@ def coffee_machine():
         if cooking > 0:
             return
         coins = insert_coins()
+        print(coins)
 
 coffee_machine()
