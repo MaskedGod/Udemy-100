@@ -89,7 +89,8 @@ def insert_coins():
     dimes = float(input("How many dimes: ")) * 0.10
     nickels = float(input("How many nickles: ")) * 0.05
     pennies = float(input("How many pennies: ")) * 0.01
-    ttl = quarters + dimes + nickels + pennies
+    x = quarters + dimes + nickels + pennies
+    ttl = ((10 ** 2) * x + 0.5) // 1 / (10 ** 2)
     if input(f"Is this correct amount {ttl}$? type 'y' or 'n' ") == 'n':
         insert_coins()
     else:
@@ -104,6 +105,6 @@ def coffee_machine():
         if cooking > 0:
             return
         coins = insert_coins()
-        print(coins)
+        
 
 coffee_machine()
