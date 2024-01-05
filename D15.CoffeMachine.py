@@ -69,7 +69,7 @@ def evaluate_answer(choice, turn_off):
 def evaluate_resourses(choice):
     count = 0
     if choice == "report" or choice == "off":
-        return
+        return 0
     elif choice["ingredients"]["water"] > resources["water"]:
         print("Sorry there is not enough water.")
         count += 1
@@ -82,6 +82,18 @@ def evaluate_resourses(choice):
     else:
         print("Ok")
     return count
+
+def insert_coins():
+    print("Insert coins. quarters = $0.25, dimes = $0.10, nickles = $0.05, pennies = $0.01")
+    quarters = float(input("How many quarters: ")) * 0.25
+    dimes = float(input("How many dimes: ")) * 0.10
+    nickels = float(input("How many nickles: ")) * 0.05
+    pennies = float(input("How many pennies: ")) * 0.01
+    ttl = quarters + dimes + nickels + pennies
+    if input(f"Is this correct amount {ttl}$? type 'y' or 'n' ") == 'n':
+        insert_coins()
+    else:
+        return ttl
     
 def coffee_machine():
     turn_off = False
@@ -89,7 +101,8 @@ def coffee_machine():
         choice = user_input()
         turn_off = evaluate_answer(choice, turn_off)
         cooking = evaluate_resourses(choice)
-        
-
+        if cooking > 0:
+            return
+        coins = insert_coins()
 
 coffee_machine()
