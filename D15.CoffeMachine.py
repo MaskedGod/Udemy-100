@@ -84,17 +84,21 @@ def evaluate_resourses(choice):
     return count
 
 def insert_coins():
-    print("Insert coins. quarters = $0.25, dimes = $0.10, nickles = $0.05, pennies = $0.01")
-    quarters = float(input("How many quarters: ")) * 0.25
-    dimes = float(input("How many dimes: ")) * 0.10
-    nickels = float(input("How many nickles: ")) * 0.05
-    pennies = float(input("How many pennies: ")) * 0.01
-    x = quarters + dimes + nickels + pennies
-    ttl = ((10 ** 2) * x + 0.5) // 1 / (10 ** 2)
-    if input(f"Is this correct amount {ttl}$? type 'y' or 'n' ") == 'n':
-        insert_coins()
-    else:
-        return ttl
+    try:
+        print("Insert coins. quarters = $0.25, dimes = $0.10, nickels = $0.05, pennies = $0.01")
+        quarters = float(input("How many quarters: ")) * 0.25
+        dimes = float(input("How many dimes: ")) * 0.10
+        nickels = float(input("How many nickels: ")) * 0.05
+        pennies = float(input("How many pennies: ")) * 0.01
+        x = quarters + dimes + nickels + pennies
+        ttl = ((10 ** 2) * x + 0.5) // 1 / (10 ** 2)
+        if input(f"Is this correct amount {ttl}$? type 'y' or 'n' ") == 'n':
+            return insert_coins()
+        else:
+            return ttl
+    except ValueError:
+        print("Invalid input. Please enter a valid number.")
+        return insert_coins()
     
 def coffee_machine():
     turn_off = False
