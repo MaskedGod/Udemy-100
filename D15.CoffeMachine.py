@@ -9,9 +9,10 @@ MENU = {
         "name": "espresso",
         "ingredients": {
             "water": 50,
+            "milk": 0,
             "coffee": 18,
         },
-        "cost": 1.5,
+        "cost": 1.50,
     },
     "latte": {
         "name": "latte",
@@ -20,7 +21,7 @@ MENU = {
             "milk": 150,
             "coffee": 24,
         },
-        "cost": 2.5,
+        "cost": 2.50,
     },
     "cappuccino": {
         "name": "cappuccino",
@@ -29,7 +30,7 @@ MENU = {
             "milk": 100,
             "coffee": 24,
         },
-        "cost": 3.0,
+        "cost": 3.00,
     }
 }
 
@@ -55,6 +56,7 @@ def user_input():
     elif x == "off":
         return "off"
     else:
+        clear()
         user_input()
 
 def evaluate_answer(choice, turn_off):
@@ -83,32 +85,54 @@ def evaluate_resourses(choice):
         print("")
     return count
 
-def insert_coins():
+        
+def process_coins(choice):
     try:
-        print("Insert coins. quarters = $0.25, dimes = $0.10, nickels = $0.05, pennies = $0.01")
+        print("Please insert coins.\nQuarters = $0.25, Dimes = $0.10, Nickels = $0.05, Pennies = $0.01")
         quarters = float(input("How many quarters: ")) * 0.25
         dimes = float(input("How many dimes: ")) * 0.10
         nickels = float(input("How many nickels: ")) * 0.05
         pennies = float(input("How many pennies: ")) * 0.01
-        x = quarters + dimes + nickels + pennies
-        ttl = ((10 ** 2) * x + 0.5) // 1 / (10 ** 2)
-        if input(f"Is this correct amount {ttl}$? type 'y' or 'n' ") == 'n':
-            return insert_coins()
+        total_coins = quarters + dimes + nickels + pennies
+        total_amount = ((10 ** 2) * total_coins + 0.5) // 1 / (10 ** 2)
+
+        if input(f"Is this the correct amount {total_amount}$? Type 'y' or 'n': ") == 'n':
+            return None  # Return None to indicate an unsuccessful transaction
         else:
-            return ttl
+            if choice["cost"] <= total_amount:
+                change = ((10 ** 2) * (total_amount - choice['cost']) + 0.5) // 1 / (10 ** 2)
+                print(f"Your change is {change}$")
+                print(f"Enjoy your {choice['name']}!")
+            else:
+                print(f"That's not enough, needed {choice['cost']}$, inserted {total_amount}$")
+                return None  # Return None to indicate an unsuccessful transaction
     except ValueError:
         print("Invalid input. Please enter a valid number.")
-        return insert_coins()
-    
+        return None  # Return None to indicate an unsuccessful transaction
+
+
+def brewing(choice, dic):
+    resources["water"] = resources["water"] - choice["ingredients"]['water']
+    resources["milk"] = resources["milk"] - choice["ingredients"]['milk']
+    resources["coffee"] = resources["coffee"] - choice["ingredients"]['coffee']
+    return resources
+
 def coffee_machine():
     turn_off = False
-    while turn_off != True:
+    while not turn_off:
         choice = user_input()
         turn_off = evaluate_answer(choice, turn_off)
+        if turn_off:
+            break
         cooking = evaluate_resourses(choice)
         if cooking > 0:
-            return
-        coins = insert_coins()
-        
+            continue  
+        coins = process_coins(choice)
+        if coins is None:
+            continue  
+        brewing(choice, resources)
+        print(f"Enjoy your hot {choice['name']}!")        
+
 
 coffee_machine()
+
